@@ -10,16 +10,10 @@
         <div class="card">
             <div class="card-header py-3 d-flex">
                 <h6 class="m-0 font-weight-bold text-primary">
-                    {{ __('booking') }}
+                    {{ __('List Jadwal') }}
                 </h6>
                 <div class="ml-auto">
                     @can('booking_create')
-                    <a href="{{ route('admin.bookings.create') }}" class="btn btn-primary">
-                        <span class="icon text-white-50">
-                            <i class="fa fa-plus"></i>
-                        </span>
-                        <span class="text">{{ __('New booking') }}</span>
-                    </a>
                     @endcan
                 </div>
             </div>
@@ -32,10 +26,13 @@
 
                                 </th>
                                 <th>No</th>
-                                <th>Customer</th>
-                                <th>Room</th>
-                                <th>Time From</th>
-                                <th>Time To</th>
+                                <th>Nama</th>
+                                <th>Mobil</th>
+                                <th>Tujuan</th>
+                                <th>Bidang</th>
+                                <th>Keterangan</th>
+                                <th>Berangkat</th>
+                                <th>Pulang</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -47,18 +44,15 @@
 
                                 </td>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $booking->customer->full_name }}</td>
-                                <td>{{ $booking->room->room_number }}</td>
-                                <td>{{ $booking->time_from }}</td>
-                                <td>{{ $booking->time_to }}</td>
+                                <td>{{ $booking->nama}}</td>
+                                <td>{{ $booking->mobil}}</td>
+                                <td>{{ $booking->tujuan}}</td>
+                                <td>{{ $booking->bidang}}</td>
+                                <td>{{ $booking->keterangan}}</td>
+                                <td>{{ $booking->berangkat}}</td>
+                                <td>{{ $booking->pulang}}</td>
                                 <td>{{ $booking->status }}</td>
                                 <td>
-                                    <a href="{{ route('admin.bookings.show', $booking->id) }}" class="btn btn-info">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-                                    <a href="{{ route('admin.bookings.edit', $booking->id) }}" class="btn btn-info">
-                                        <i class="fa fa-pencil-alt"></i>
-                                    </a>
                                     <form onclick="return confirm('are you sure ? ')" class="d-inline" action="{{ route('admin.bookings.destroy', $booking->id) }}" method="POST">
                                         @csrf
                                         @method('delete')

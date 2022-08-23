@@ -24,12 +24,7 @@ class RoomRequest extends FormRequest
     public function rules()
     {
         return [
-            'room_number' => 'required',
-            'floor' => 'max:2147483647|required|numeric',
-            'description' => 'required',
-            'category_id' => 'required|numeric',
-            'price' => 'required|numeric',
-            'capacity' => 'required|numeric'
+            'model' => 'required',
         ];
     }
 }

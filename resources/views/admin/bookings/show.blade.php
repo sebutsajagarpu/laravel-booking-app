@@ -17,34 +17,48 @@
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover" cellspacing="0" width="100%">
                         <tr>
-                            <th>customer</th>
-                            <td>{{ $booking->customer->full_name }}</td>
+                            <th>Nama Driver</th>
+                            <td>{{ $booking->nama }}</td>
                         </tr>
                         <tr>
-                            <th>room</th>
-                            <td>{{ $booking->room->room_number }}</td>
+                            <th>Kendaraan</th>
+                            <td>{{ $booking->mobil }}</td>
                         </tr>
                         <tr>
-                            <th>price</th>
-                            <td>${{ $booking->room->price }}</td>
+                            <th>Tujuan</th>
+                            <td>{{ $booking->tujuan }}</td>
                         </tr>
                         <tr>
-                            <th>time from</th>
-                            <td>{{ $booking->time_from }}</td>
+                            <th>Bidang</th>
+                            <td>{{ $booking->bidang }}</td>
                         </tr>
                         <tr>
-                            <th>time to</th>
-                            <td>{{ $booking->time_to }}</td>
+                            <th>Keterangan</th>
+                            <td>{{ $booking->keterangan }}</td>
                         </tr>
                         <tr>
-                            <th>amount</th>
-                            <td>{{ $booking->amount }}</td>
+                            <th>Waktu Keberangkatan</th>
+                            <td>{{ $booking->berangkat }}</td>
                         </tr>
                         <tr>
-                            <th>additional information</th>
-                            <td>{{ $booking->additional_information }}</td>
+                            <th>Waktu Kedatangan</th>
+                            <td>{{ $booking->pulang }}</td>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td>{{ $booking->status }}</td>
                         </tr>
                     </table>
+                    <a href="{{ route('admin.bookings.edit', $booking->id) }}" class="btn btn-info">
+                                        <i class="fa fa-pencil-alt"></i> Edit
+                                    </a>
+                                    <form onclick="return confirm('are you sure ? ')" class="d-inline" action="{{ route('admin.bookings.destroy', $booking->id) }}" method="POST">
+                                        @csrf
+                                        @method('delete')
+                                        <button class="btn btn-danger">
+                                            <i class="fa fa-trash"></i> Hapus
+                                        </button>
+                                    </form>
                 </div>
             </div>
         </div>

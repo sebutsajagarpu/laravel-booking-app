@@ -7,34 +7,38 @@ use App\Models\Room;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
-use App\Models\Booking;
+use App\Models\jadwal;
+use App\Models\mobil;
+use App\Models\supir;
 
 class SystemCalendarController extends Controller
 {
     public $sources = [
         [
-            'model'      => Booking::class,
-            'date_field' => 'time_from',
-            'date_field_to' => 'time_to',
-            'field'      => 'additional_information',
+            'model'      => jadwal::class,
+            'date_field' => 'berangkat',
+            'date_field_to' => 'pulang',
+            'field'      => 'nama',
+            'coba'      => 'mobil',
             'prefix'     => '',
             'suffix'     => '',
-            'route'      => 'admin.bookings.edit',
+            'route'      => 'admin.bookings.show',
         ],
     ];
 
     public function index(Request $request)
     {
         $bookings = [];
-        $rooms = Room::all()->pluck('room_number', 'id');
-        $customers = Customer::all()->pluck('full_name', 'id');
+        $rooms = mobil::all()->pluck('model', 'id');
+        $customers = supir::all()->pluck('nama', 'id');
+
+        $input_array = array("purple", "red", "yellow", "blue", "green"); 
+        $rand_keys = array_rand($input_array , 2);
+        $test = $input_array[$rand_keys[0]];
 
         foreach ($this->sources as $source) {
-            $models = $source['model']::when($request->input('room_id'), function ($query) use ($request) {
-                    $query->where('room_id', $request->input('room_id'));
-                })
-                ->when($request->input('customer_id'), function ($query) use ($request) {
-                    $query->where('customer_id', $request->input('customer_id'));
+            $models = $source['model']::when($request->input('customer_id'), function ($query) use ($request) {
+                    $query->where('nama', $request->input('customer_id'));
                 })
                 ->get();
             foreach ($models as $model) {
@@ -44,12 +48,13 @@ class SystemCalendarController extends Controller
                 if (!$crudFieldValue && $crudFieldValueTo) {
                     continue;
                 }
-
+                
                 $bookings[] = [
-                    'title' => trim($source['prefix'] . " " . $model->{$source['field']}
+                    'title' => trim($source['prefix'] . " " . $model->{$source['field']}. " || " . $model->{$source['coba']}
                         . " " . $source['suffix']),
                     'start' => $crudFieldValue,
                     'end' => $crudFieldValueTo,
+                    'color' => '',
                     'url'   => route($source['route'], $model->id),
                 ];
             }

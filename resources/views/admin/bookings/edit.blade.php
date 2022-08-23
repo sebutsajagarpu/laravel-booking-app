@@ -28,40 +28,40 @@
                     @csrf
                     @method('put')
                     <div class="form-group">
-                        <label for="customer">{{ __('Customer') }}</label>
-                        <select class="form-control" name="customer_id" id="customer">
+                        <label for="nama">{{ __('nama') }}</label>
+                        <select class="form-control" name="nama" id="nama">
                             @foreach($customers as $id => $customer)
-                                <option value="{{ $id }}">{{ $customer }}</option>
+                                <option value="{{ $customer }}" {{ $booking->nama == $customer ? "selected" : '' }}>{{ $customer }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="room">{{ __('Room') }}</label>
-                        <select class="form-control" name="room_id" id="room">
+                        <label for="mobil">{{ __('kendaraan') }}</label>
+                        <select class="form-control" name="mobil" id="mobil">
                             @foreach($rooms as $id => $room)
-                                <option value="{{ $id }}">{{ $room }}</option>
+                                <option value="{{ $room }}" {{ $booking->mobil == $room ? "selected" : '' }}>{{ $room }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="time_from">{{ __('Time From') }}</label>
-                        <input type="text" class="form-control datetimepicker" id="time_from" name="time_from" value="{{ old('time_from', $booking->time_from) }}" />
+                        <label for="tujuan">{{ __('tujuan') }}</label>
+                        <input type="text" class="form-control" id="tujuan" name="tujuan" value="{{ old('tujuan', $booking->tujuan) }}" />
                     </div>
                     <div class="form-group">
-                        <label for="time_to">{{ __('Time to') }}</label>
-                        <input type="text" class="form-control datetimepicker" id="time_to" name="time_to" value="{{ old('time_to', $booking->time_to) }}" />
+                        <label for="bidang">{{ __('bidang') }}</label>
+                        <input type="text" class="form-control" id="bidang" name="bidang" value="{{ old('bidang', $booking->bidang) }}" />
                     </div>
                     <div class="form-group">
-                        <label for="additional_information">{{ __('Additional Information') }}</label>
-                        <textarea class="form-control" name="additional_information" id="additional_information"  cols="30" rows="10">{{ old('additional_information', $booking->additional_information) }}</textarea>
+                        <label for="keterangan">{{ __('keterangan') }}</label>
+                        <input type="text" class="form-control" id="keterangan" name="keterangan" value="{{ old('keterangan', $booking->keterangan) }}" />
                     </div>
                     <div class="form-group">
-                        <label for="status">{{ __('Status') }}</label>
-                        <select class="form-control" name="status" id="status">
-                                <option value="0" {{ $booking->status == 0 ? 'selected' : null }} >Created</option>
-                                <option value="1" {{ $booking->status == 1 ? 'selected' : null }} >Completed</option>
-                                <option value="2" {{ $booking->status == 2 ? 'selected' : null }} >Concelled</option>
-                        </select>
+                        <label for="berangkat">{{ __('berangkat') }}</label>
+                        <input type="text" class="form-control datetimepicker" id="berangkat" name="berangkat" value="{{ old('berangkat', $booking->berangkat) }}" />
+                    </div>
+                    <div class="form-group">
+                        <label for="pulang">{{ __('pulang') }}</label>
+                        <input type="text" class="form-control datetimepicker" id="pulang" name="pulang" value="{{ old('pulang', $booking->pulang) }}" />
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">{{ __('Save') }}</button>
                 </form>

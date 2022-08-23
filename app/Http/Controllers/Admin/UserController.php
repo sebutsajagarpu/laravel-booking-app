@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
+use App\Models\supir;
 
 class UserController extends Controller
 {
@@ -18,9 +19,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $supir = supir::all();
 
-        return view('admin.users.index', compact('users'));
+        return view('admin.users.index', compact('supir'));
     }
 
     /**
@@ -43,8 +44,8 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $user = User::create($request->validated() + ['password' => bcrypt($request->password)]);
-        $user->roles()->sync($request->input('roles'));
+        $user = supir::create($request->validated());
+        // $user->roles()->sync($request->input('roles'));
 
         return redirect()->route('admin.users.index')->with([
             'message' => 'successfully created !',
@@ -58,11 +59,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(supir $user)
     {
-        $roles = Role::pluck('title', 'id');
-
-        return view('admin.users.edit', compact('user','roles'));
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -72,10 +71,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request,User $user)
+    public function update(UpdateUserRequest $request,supir $user)
     {
-        $user->update($request->validated() + ['password' => bcrypt($request->password)]);
-        $user->roles()->sync($request->input('roles'));
+        $user->update($request->validated());
 
         return redirect()->route('admin.users.index')->with([
             'message' => 'successfully updated !',
@@ -89,7 +87,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(supir $user)
     {
         $user->delete();
 
@@ -106,7 +104,7 @@ class UserController extends Controller
      */
     public function massDestroy(Request $request)
     {
-        User::whereIn('id', request('ids'))->delete();
+        supir::whereIn('id', request('ids'))->delete();
 
         return response()->noContent();
     }

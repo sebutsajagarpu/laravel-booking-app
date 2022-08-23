@@ -5,7 +5,7 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ __('edit user')}}</h1>
+        <h1 class="h3 mb-0 text-gray-800">{{ __('Edit Data Driver')}}</h1>
         <a href="{{ route('admin.users.index') }}" class="btn btn-primary btn-sm shadow-sm">{{ __('Go Back') }}</a>
     </div>
 
@@ -26,24 +26,12 @@
                     @csrf
                     @method('put')
                     <div class="form-group">
-                        <label for="name">{{ __('Name') }}</label>
-                        <input type="text" class="form-control" id="name" placeholder="{{ __('Name') }}" name="name" value="{{ old('name', $user->name) }}" />
+                        <label for="nama">{{ __('nama') }}</label>
+                        <input type="text" class="form-control" id="nama" placeholder="{{ __('nama') }}" name="nama" value="{{ old('nama', $user->nama) }}" />
                     </div>
                     <div class="form-group">
-                        <label for="email">{{ __('Email') }}</label>
-                        <input type="email" class="form-control" id="email" placeholder="{{ __('Email') }}" name="email" value="{{ old('email',  $user->email) }}" />
-                    </div>
-                    <div class="form-group">
-                        <label for="password">{{ __('Password') }}</label>
-                        <input type="text" class="form-control" id="password" placeholder="{{ __('Password') }}" name="password" value="{{ old('password',  $user->password) }}" />
-                    </div>
-                    <div class="form-group">
-                        <label for="roles">{{ __('Role') }}</label>
-                        <select name="roles[]" id="roles" class="form-control select2" multiple="multiple" required>
-                            @foreach($roles as $id => $roles)
-                                <option value="{{ $id }}" {{ (in_array($id, old('roles', [])) || isset($user) && $user->roles->contains($id)) ? 'selected' : '' }}>{{ $roles }}</option>
-                            @endforeach
-                        </select>
+                        <label for="nomor">{{ __('Nomor') }}</label>
+                        <input type="nomor" class="form-control" id="nomor" placeholder="{{ __('nomor') }}" name="nomor" value="{{ old('nomor',  $user->nomor) }}" />
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">{{ __('Save')}}</button>
                 </form>

@@ -10,47 +10,38 @@
         <div class="card">
             <div class="card-header py-3 d-flex">
                 <h6 class="m-0 font-weight-bold text-primary">
-                    {{ __('List Kendaraan') }}
+                    {{ __('List Jadwal') }}
                 </h6>
                 <div class="ml-auto">
-                    @can('room_create')
-                    <a href="{{ route('admin.rooms.create') }}" class="btn btn-primary">
-                        <span class="icon text-white-50">
-                            <i class="fa fa-plus"></i>
-                        </span>
-                        <span class="text">{{ __('Tambah Kendaraan') }}</span>
-                    </a>
+                    @can('booking_create')
                     @endcan
                 </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-hover datatable datatable-room" cellspacing="0" width="100%">
+                    <table class="table table-bordered table-striped table-hover datatable datatable-booking" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th width="10">
 
                                 </th>
-                                <th>No</th>
-                                <th>Kendaraan</th>
-                             
+                                
+                                <th>Status</th>
+                               
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($mobil as $mobil)
-                            <tr data-entry-id="{{ $mobil->id }}">
+                            @forelse($bookings as $booking)
+                            <tr data-entry-id="{{ $booking->id }}">
                                 <td>
 
                                 </td>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $mobil->model }}</td>
+                               
+                                <td>{{ $booking->status }}</td>
                                 <td>
-                                    <a href="{{ route('admin.rooms.edit', $mobil->id) }}" class="btn btn-info">
-                                        <i class="fa fa-pencil-alt"></i>
-                                    </a>
-                                    <form onclick="return confirm('are you sure ? ')" class="d-inline" action="{{ route('admin.rooms.destroy', $mobil->id) }}" method="POST">
+                                    <form onclick="return confirm('are you sure ? ')" class="d-inline" action="{{ route('admin.updateStatus', $booking->id) }}" method="POST">
                                         @csrf
-                                        @method('delete')
+                                        @method('post')
                                         <button class="btn btn-danger">
                                             <i class="fa fa-trash"></i>
                                         </button>
@@ -59,7 +50,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="9" class="text-center">{{ __('Kosong') }}</td>
+                                <td colspan="9" class="text-center">{{ __('Data Empty') }}</td>
                             </tr>
                             @endforelse
                         </tbody>
@@ -79,7 +70,7 @@
   let deleteButtonTrans = 'delete selected'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.rooms.mass_destroy') }}",
+    url: "{{ route('admin.bookings.mass_destroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
@@ -104,7 +95,7 @@
     order: [[ 1, 'asc' ]],
     pageLength: 50,
   });
-  $('.datatable-room:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  $('.datatable-booking:not(.ajaxTable)').DataTable({ buttons: dtButtons })
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
         $($.fn.dataTable.tables(true)).DataTable()
             .columns.adjust();

@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-header py-3 d-flex">
                 <h6 class="m-0 font-weight-bold text-primary">
-                {{ __('Users') }}
+                {{ __('List Driver') }}
                 </h6>
                 <div class="ml-auto">
                     @can('user_create')
@@ -15,7 +15,7 @@
                         <span class="icon text-white-50">
                             <i class="fa fa-plus"></i>
                         </span>
-                        <span class="text">{{ __('New user') }}</span>
+                        <span class="text">{{ __('Tambah Driver') }}</span>
                     </a>
                     @endcan
                 </div>
@@ -29,29 +29,23 @@
 
                                 </th>
                                 <th>No</th>
-                                <th>{{ __('Name') }}</th>
-                                <th>{{ __('Email') }}</th>
-                                <th>{{ __('Roles') }}</th>
+                                <th>{{ __('Nama') }}</th>
+                                <th>{{ __('No.Telp') }}</th>
                                 <th>{{ __('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($users as $user)
-                            <tr data-entry-id="{{ $user->id }}">
+                            @forelse($supir as $supir)
+                            <tr data-entry-id="{{ $supir->id }}">
                                 <td></td>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
+                                <td>{{ $supir->nama }}</td>
+                                <td>{{ $supir->nomor }}</td>
                                 <td>
-                                    @foreach($user->roles as $key => $role)
-                                        <span class="badge badge-info">{{ $role->title }}</span>
-                                    @endforeach
-                                </td>
-                                <td>
-                                    <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-info">
+                                    <a href="{{ route('admin.users.edit', $supir->id) }}" class="btn btn-info">
                                         <i class="fa fa-pencil-alt"></i>
                                     </a>
-                                    <form onclick="return confirm('are you sure ? ')"  class="d-inline" action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
+                                    <form onclick="return confirm('are you sure ? ')"  class="d-inline" action="{{ route('admin.users.destroy', $supir->id) }}" method="POST">
                                         @csrf
                                         @method('delete')
                                         <button class="btn btn-danger">

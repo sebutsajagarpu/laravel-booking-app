@@ -12,9 +12,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\Admin\BookingRequest;
+use App\Http\Requests\Admin\FungsiRequest;
 use Symfony\Component\HttpFoundation\Response;
 
-class BookingController extends Controller
+class FungsiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +28,7 @@ class BookingController extends Controller
 
         $bookings = jadwal::all();
 
-        return view('admin.bookings.index', compact('bookings'));
+        return view('admin.fungsi.index', compact('bookings'));
     }
 
      /**
@@ -106,15 +107,15 @@ class BookingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(BookingRequest $request, jadwal $booking)
+    public function update(jadwal $booking)
     {
         abort_if(Gate::denies('booking_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        dd($booking->nama);
+        $booking->delete();
 
-        $booking->update($request->validated());
-
-        return redirect()->route('admin.system_calendars.index')->with([
-            'message' => 'successfully updated !',
-            'alert-type' => 'info'
+        return redirect()->route('admin.fungsi.index')->with([
+            'message' => 'successfully deleted !',
+            'alert-type' => 'danger'
         ]);
     }
 
@@ -125,16 +126,6 @@ class BookingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(jadwal $booking)
-    {
-        abort_if(Gate::denies('booking_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $booking->delete();
-
-        return redirect()->route('admin.system_calendars.index')->with([
-            'message' => 'successfully deleted !',
-            'alert-type' => 'danger'
-        ]);
-    }
-    public function updateStatus(jadwal $booking)
     {
         abort_if(Gate::denies('booking_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         dd($booking->status);

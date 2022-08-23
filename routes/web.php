@@ -37,6 +37,8 @@ Route::group(['middleware' => ['isAdmin','auth'],'prefix' => 'admin', 'as' => 'a
     Route::resource('customers', \App\Http\Controllers\Admin\CustomerController::class);
     Route::delete('customers_mass_destroy', [\App\Http\Controllers\Admin\CustomerController::class, 'massDestroy'])->name('customers.mass_destroy');
     Route::resource('bookings', \App\Http\Controllers\Admin\BookingController::class);
+    Route::post('updateStatus/{id}', [\App\Http\Controllers\Admin\BookingController::class,'updateStatus'])->name('updateStatus');
+    Route::resource('fungsi', \App\Http\Controllers\Admin\FungsiController::class);
     Route::delete('bookings_mass_destroy', [\App\Http\Controllers\Admin\BookingController::class, 'massDestroy'])->name('bookings.mass_destroy');
 
     Route::get('find_rooms', [\App\Http\Controllers\Admin\FindRoomController::class, 'index'])->name('find_rooms.index');

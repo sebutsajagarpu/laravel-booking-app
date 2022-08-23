@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\Admin\RoomRequest;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\mobil;
 
 class RoomController extends Controller
 {
@@ -20,11 +21,9 @@ class RoomController extends Controller
      */
     public function index()
     {
-        abort_if(Gate::denies('room_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $mobil = mobil::all();
 
-        $rooms = Room::all();
-
-        return view('admin.rooms.index', compact('rooms'));
+        return view('admin.rooms.index', compact('mobil'));
     }
 
     /**
@@ -34,8 +33,6 @@ class RoomController extends Controller
      */
     public function create()
     {
-        abort_if(Gate::denies('room_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $categories = Category::get()->pluck('name', 'id');
 
         return view('admin.rooms.create', compact('categories'));
@@ -49,9 +46,8 @@ class RoomController extends Controller
      */
     public function store(RoomRequest $request)
     {
-        abort_if(Gate::denies('room_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        Room::create($request->validated());
+        $mobil = mobil::create($request->validated());
+        // $user->roles()->sync($request->input('roles'));
 
         return redirect()->route('admin.rooms.index')->with([
             'message' => 'successfully created !',
@@ -80,13 +76,9 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Room $room)
+    public function edit(mobil $room)
     {
-        abort_if(Gate::denies('room_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $categories = Category::get()->pluck('name', 'id');
-
-        return view('admin.rooms.edit', compact('room', 'categories'));
+        return view('admin.rooms.edit', compact('room'));
     }
 
     /**
@@ -96,10 +88,8 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(RoomRequest $request, Room $room)
+    public function update(RoomRequest $request,mobil $room)
     {
-        abort_if(Gate::denies('room_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $room->update($request->validated());
 
         return redirect()->route('admin.rooms.index')->with([
@@ -114,10 +104,8 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Room $room)
+    public function destroy(mobil $room)
     {
-        abort_if(Gate::denies('room_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $room->delete();
 
         return redirect()->route('admin.rooms.index')->with([
@@ -133,9 +121,7 @@ class RoomController extends Controller
      */
     public function massDestroy(Request $request)
     {
-        abort_if(Gate::denies('room_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        Room::whereIn('id', request('ids'))->delete();
+        mobil::whereIn('id', request('ids'))->delete();
 
         return response()->noContent();
     }

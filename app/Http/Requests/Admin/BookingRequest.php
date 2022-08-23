@@ -24,12 +24,13 @@ class BookingRequest extends FormRequest
     public function rules()
     {
         return [
-            'customer_id' => 'required',
-            'room_id' => 'required',
-            'time_from' => 'required|date_format:Y-m-d H:i',
-            'time_to' => 'required|date_format:Y-m-d H:i',
-            'additional_information' => 'required',
-            'status' => 'required',
+            'nama'     => ['required'],
+            'mobil'     => ['required'],
+            'tujuan'     => ['required'],
+            'bidang'     => ['required'],
+            'keterangan'     => ['required'],
+            'berangkat'     => [],
+            'pulang'     => [],
         ];
     }
 }
